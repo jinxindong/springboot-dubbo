@@ -1,0 +1,17 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+
+    <!-- http://dubbo.apache.org/zh-cn/docs/user/references/xml/dubbo-service.html -->
+   <bean id="userService" class="com.jin.learn.provider.springbootprovider.impl.UserServiceImpl"/>
+    <dubbo:service interface="com.jin.learn.api.springbootapi.api.UserService" ref="userService">
+        <dubbo:method name="getNameById" timeout="10000"></dubbo:method>
+    </dubbo:service>
+
+
+    <!-- 配置当前生产者的统一规则-->
+    <dubbo:provider  timeout="5000" ></dubbo:provider>
+</beans>

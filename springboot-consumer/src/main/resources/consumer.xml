@@ -1,0 +1,28 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+
+    <!--
+    dubbo视频讲解
+    https://www.bilibili.com/video/av49269938/?p=22
+
+    本地存根 在消费者实现一个
+    过程：
+    Consumer:Action
+    Dubbo -> xxxServiceProxy  xxxServiceStub 在消费者本地类似于一个aop  mock是stub的子集 可以实现服务降级 在页面直接点击降级
+    Provider:-> xxxServiceImpl
+    1、精确优先（方法优先、接口次之、全局配置再次之）
+    2、消费者设置优先（如果级别一样，消费者优先，生产者次之）
+    -->
+    <dubbo:reference id="userService" interface="com.jin.learn.api.springbootapi.api.UserService"
+                     check="true"
+                     loadbalance="random"
+    >
+        <dubbo:method name="getNameById" timeout="5000" loadbalance="random" ></dubbo:method>
+    </dubbo:reference>
+    <!-- 配置当前消费者的统一规则-->
+    <dubbo:consumer check="false" timeout="5000" ></dubbo:consumer>
+</beans>
